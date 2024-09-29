@@ -23,15 +23,15 @@ export class MainModalComponent implements OnInit{
 
   formfieldList: IFormElement[] = [
     {
-      control: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]),
+      control: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       complement: {
         label:'Nombre De La Tarea',
         placeholder: 'nombre de la tarea..',
         type: 'text',
         errors: [
           { key: 'required', label: 'Este campo es requerido' },
-          { key: 'minlength', label: 'Minimo 6 caracteres'},
-          { key: 'maxlength', label: 'Maximo 200 caracteres'}
+          { key: 'minlength', label: 'Minimo 5 caracteres'},
+          { key: 'maxlength', label: 'Maximo 100 caracteres'}
         ]
       }
     },
