@@ -1,0 +1,12 @@
+<table *ngIf="elementsToShowPage && elementsToShowPage.length >0">
+    <tr *ngIf="listKeys && listKeys.length > 0">
+      <th *ngFor="let key of listKeys; let i = index">
+        {{ replaceLabels && replaceLabels[i]? replaceLabels[i].label: key }}
+      </th>
+    </tr>
+    <tr *ngFor="let element of elementsToShowPage">
+      <td *ngFor="let key of listKeys">
+        {{ element[key] }}
+      </td>
+    </tr>
+</table>
