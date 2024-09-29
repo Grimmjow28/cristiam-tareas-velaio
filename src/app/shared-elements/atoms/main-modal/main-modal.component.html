@@ -8,7 +8,7 @@
             <div>
                 <app-main-input class="main-modal__input" *ngFor="let element of formfieldList" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
             </div>
-            <div style="scroll-behavior: auto; overflow-y: auto; height: 100px;">
+            <div style="scroll-behavior: auto; overflow-y: auto; height: 250px;">
                 <p class="text" style="margin-top: 0rem;">Agregar Persona:</p>
                 <app-main-select [selectLabel]="''" [listaElementos]="listUsers" (selected)="addUser($event)"></app-main-select>
                 <p class="text">Personas Asociadas:</p>
