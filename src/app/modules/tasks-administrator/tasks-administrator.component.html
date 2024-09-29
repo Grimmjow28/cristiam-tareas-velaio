@@ -1,9 +1,12 @@
-<div style="background:#262051; border: 1px solid #46416B; margin: 0.5rem; border-radius: 0.5rem; padding: 1rem; ">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+<div class="task-administrartor__container">
+    <div class="task-administrartor__title">
         <h1 class="title">Lista De Tareas</h1>
         <app-main-button [label]="'Agregar Tarea'" (click)="agregateElement()"></app-main-button>
     </div>
-    <app-responsive-table [elementsToShow]="tasksList" [replaceLabels]="replaceLabels" [elementsForPage]="8"></app-responsive-table>
+    <div class="task-administrartor__filters">
+        <strong class="task-administrartor__filters__text text">Filter: </strong> <app-main-button *ngFor="let filter of filters; let i = index" [label]="filter.label" [activateColor]="i==slectedFilter? filter.activateColor: ''" (click)="ApplyFilter($event)"></app-main-button>
+    </div>
+    <app-responsive-table [elementsToShow]="filteredTasksList" [replaceLabels]="replaceLabels" [elementsForPage]="8"></app-responsive-table>
 </div>
 
 <app-main-modal *ngIf="showModal |async"></app-main-modal>

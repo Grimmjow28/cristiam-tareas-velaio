@@ -9,6 +9,7 @@ import { StoreService } from 'src/app/shared-elements/services/store.service';
 import { MainButtonComponent } from 'src/app/shared-elements/atoms/main-button/main-button.component';
 import { MainModalComponent } from 'src/app/shared-elements/atoms/main-modal/main-modal.component';
 import { ModalService } from 'src/app/shared-elements/services/modal.service';
+import { IFilters } from 'src/app/interfaces/IFilters';
 
 @Component({
   selector: 'app-tasks-administrator',
@@ -23,11 +24,31 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
 
 
   tasksList: Itask[] = [];
+  filteredTasksList: Itask[] = [];
   replaceLabels: IResponsiveTableKeyLabel[] = [
     { key:'userName', label: 'Usuario asignado', position: 4},
-    { key:'id', label: 'Id', position: 2},
+    { key:'id', label: 'Id', position: 1},
     { key:'title', label: 'Tarea', position: 3},
-    { key:'completed', label: 'Estatus', position:1}
+    { key:'completed', label: 'Estatus', position:2}
+  ]
+
+  slectedFilter: number = 0;
+  filters: IFilters[] =  [
+    {
+      label: 'Todas',
+      activateColor: 'darkgrey',
+      value: 0,
+    },
+    {
+      label: 'Completadas',
+      activateColor: 'darkgrey',
+      value: 1,
+    },
+    {
+      label: 'Pendientes',
+      activateColor: 'darkgrey',
+      value: 2,
+    }
   ]
   showModal: Observable< boolean> = of(false);
 
@@ -36,6 +57,7 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.storeService.gettaskList().pipe(takeUntil(this.unsubscribe$)).subscribe(tasksList => {
       this.tasksList = tasksList;
+      this.generateFilteredList();
     });
     this.showModal = this.modalService.getShowModal();
     this.getTasksList();
@@ -52,6 +74,28 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
 
   agregateElement() {
     this.modalService.setShowModal(true);
+  }
+
+  ApplyFilter($event: string) {
+    for(let filter of this.filters) {
+      if(filter.label.includes($event) ) {
+        this.slectedFilter = filter.value;
+        break;
+      }
+    }
+    this.generateFilteredList();
+  }
+
+  generateFilteredList() {
+    if(this.tasksList) {
+      if(this.slectedFilter == 0) {
+        this.filteredTasksList = [...this.tasksList];
+      } else if (this.slectedFilter == 1) {
+        this.filteredTasksList = this.tasksList.filter(task => task.completed);
+      } else {
+        this.filteredTasksList = this.tasksList.filter(task => !task.completed);
+      }
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,9 +11,11 @@ import { CommonModule } from '@angular/common';
 export class MainButtonComponent {
 
   @Output() click = new EventEmitter<string>()
-  @Input() label: string = 'Submit'
+  @Input() label: string = 'Submit';
+  @Input() activateColor: string = '';
 
   generateEvent() {
     this.click.emit(this.label);
   }
+
 }
