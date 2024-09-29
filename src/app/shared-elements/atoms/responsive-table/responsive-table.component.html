@@ -12,12 +12,19 @@
           <app-complex-element-table [elements]="element[key]" [doNotShowProperties]="['id']"></app-complex-element-table>
         </ng-container>
         <ng-template #elseNotDone>
-          <ng-container *ngIf="key == 'date'"> 
-            {{ element[key] | date }}
+          <ng-container *ngIf="useButtonsOnTheFields && useButtonsOnTheFields.includes(key); else notButton">
+            <app-main-button 
+            [activateColor]="element[key] == true? 'green': 'red'"[label]="element[key] == true? 'Terminada': 'En Proceso'"></app-main-button>
           </ng-container>
-          <ng-container *ngIf="key != 'date'">
-            {{element[key]}}
-          </ng-container>
+          <ng-template #notButton>
+            <ng-container *ngIf="key == 'date'"> 
+              {{ element[key] | date }}
+            </ng-container>
+            <ng-container *ngIf="key != 'date'">
+              {{element[key]}}
+            </ng-container>
+          </ng-template>
+
         </ng-template>        
       </td>
     </tr>

@@ -6,7 +6,7 @@
     <div class="task-administrartor__filters">
         <strong class="task-administrartor__filters__text text">Filter: </strong> <app-main-button *ngFor="let filter of filters; let i = index" [label]="filter.label" [activateColor]="i==slectedFilter? filter.activateColor: ''" (click)="ApplyFilter($event)"></app-main-button>
     </div>
-    <app-responsive-table [elementsToShow]="filteredTasksList" [replaceLabels]="replaceLabels" [elementsForPage]="8">
+    <app-responsive-table [elementsToShow]="filteredTasksList" [replaceLabels]="replaceLabels" [elementsForPage]="8" [useButtonsOnTheFields]="useButtonsOnTheFields">
 
     </app-responsive-table>
 </div>

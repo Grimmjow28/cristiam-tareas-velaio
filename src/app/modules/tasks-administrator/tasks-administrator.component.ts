@@ -33,6 +33,7 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
     { key:'date', label: 'Fecha', position: 4}
   ];
 
+  useButtonsOnTheFields = ['completed'];
   slectedFilter: number = 0;
   filters: IFilters[] =  [
     {

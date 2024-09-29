@@ -7,13 +7,14 @@ import { ComplexElementTableComponent } from '../../molecules/complex-element-ta
 @Component({
   selector: 'app-responsive-table',
   standalone: true,
-  imports: [CommonModule, MainButtonComponent, ComplexElementTableComponent],
+  imports: [CommonModule, MainButtonComponent, ComplexElementTableComponent, MainButtonComponent],
   templateUrl: './responsive-table.component.html',
   styleUrls: ['./responsive-table.component.scss']
 })
 export class ResponsiveTableComponent implements OnChanges {
 
   @Input() replaceLabels: IResponsiveTableKeyLabel[] | undefined;
+  @Input() useButtonsOnTheFields: string[] | undefined; 
   @Input() elementsToShow: any[] | undefined;
   @Input() elementsForPage: number = 10;
   actualPage: number = 1;
