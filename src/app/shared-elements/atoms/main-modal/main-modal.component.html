@@ -6,7 +6,15 @@ width: -webkit-fill-available;
 height: -webkit-fill-available; display: flex;     justify-content: center;">
     <div style="width: 80%; height: 90%; margin: auto; background: #262051; border-radius: 1rem; padding: 1rem;">
         <h1 class="title">{{ title }}</h1>
+        <form #addFormtp="ngForm">
+            <div>
+                <app-main-input *ngFor="let element of formfieldList" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
+            </div>
+        </form>
     </div>
+
+
+    
 </div>
 <div style="    
 position: fixed;
