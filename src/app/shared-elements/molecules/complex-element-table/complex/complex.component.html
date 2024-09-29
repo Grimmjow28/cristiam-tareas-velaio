@@ -1,6 +1,6 @@
 <div *ngIf="keys && keys.length && keys.length >0">
     <p *ngFor="let key of keys" >
-        <ng-container>
+        <ng-container *ngIf="!doNotShowProperties || (doNotShowProperties && !doNotShowProperties.includes(key) )">
             {{ seeContent(key) }}
         </ng-container>
     </p>

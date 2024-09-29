@@ -13,6 +13,8 @@ export class ComplexComponent implements OnInit, OnChanges {
 
   keys: string[]=[];
   @Input() element: any;
+  @Input() doNotShowProperties: string[] | undefined;
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.element) {

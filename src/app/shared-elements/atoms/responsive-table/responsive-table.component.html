@@ -9,7 +9,7 @@
     <tr *ngFor="let element of elementsToShowPage">
       <td *ngFor="let key of listKeys"  class="responsive-table__td-th">
         <ng-container *ngIf="isComplex.includes(key); else elseNotDone">
-          <app-complex-element-table [elements]="element[key]"></app-complex-element-table>
+          <app-complex-element-table [elements]="element[key]" [doNotShowProperties]="['id']"></app-complex-element-table>
         </ng-container>
         <ng-template #elseNotDone>
           <ng-container *ngIf="key == 'date'"> 

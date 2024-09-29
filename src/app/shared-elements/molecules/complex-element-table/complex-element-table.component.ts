@@ -13,9 +13,10 @@ export class ComplexElementTableComponent implements OnInit {
 
   @Input() elements: any = [];
   isArray: boolean = false;
+  @Input() doNotShowProperties: string[] | undefined;
 
   ngOnInit(): void {
     this.isArray = Array.isArray(this.elements);
   }
-  
+
 }
