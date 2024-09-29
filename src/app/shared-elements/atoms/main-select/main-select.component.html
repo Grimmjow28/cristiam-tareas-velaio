@@ -1,6 +1,6 @@
 <div>
-    <label class="text main-select__text" for="select">{{ selectLabel }}:</label>
-    <select name="select" id="select" (change)="selectedElement($event)" >
+    <label class="text main-select__text" *ngIf="selectLabel != ''" for="select">{{ selectLabel }}:</label>
+    <select name="select" id="select" style="width: 100%" (change)="selectedElement($event)" >
       <option *ngFor="let element of listaElementos" [value]="element">{{ element }}</option>
     </select>
 </div>

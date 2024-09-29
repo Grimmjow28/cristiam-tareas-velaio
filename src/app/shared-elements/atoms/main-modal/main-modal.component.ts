@@ -5,21 +5,33 @@ import { MainInputComponent } from '../main-input/main-input.component';
 import { IFormElement } from 'src/app/interfaces/IInputElement';
 import { ModalService } from '../../services/modal.service';
 import { MainButtonComponent } from "../main-button/main-button.component";
+import { MainSelectComponent } from '../main-select/main-select.component';
+import { StoreService } from '../../services/store.service';
+import { Subject, takeUntil } from 'rxjs';
+import { IUser } from 'src/app/interfaces/IUser';
+import { ClientService } from '../../services/client.service';
+import { ResponsiveTableComponent } from '../responsive-table/responsive-table.component';
+import { IResponsiveTableKeyLabel } from 'src/app/interfaces/responsive.table.interfaces';
 
 @Component({
   selector: 'app-main-modal',
   standalone: true,
-  imports: [CommonModule, MainInputComponent, FormsModule, ReactiveFormsModule, MainButtonComponent],
+  imports: [CommonModule, MainInputComponent, FormsModule, ReactiveFormsModule, MainButtonComponent, MainSelectComponent, ResponsiveTableComponent],
   templateUrl: './main-modal.component.html',
   styleUrls: ['./main-modal.component.scss']
 })
 export class MainModalComponent implements OnInit{
 
-  constructor(private modalService: ModalService, private formBuilder: FormBuilder){}
+  constructor(private modalService: ModalService, private formBuilder: FormBuilder, private storeService: StoreService,  private clientService: ClientService){}
+
 
   @Input() title: string = 'Crear Nueva Tarea';
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
   addForm: UntypedFormGroup | undefined;
+  listUsers: string[] = [];
+  fullList:IUser[] =[];
+  addedUser: IUser[] =[];
 
   formfieldList: IFormElement[] = [
     {
@@ -48,10 +60,35 @@ export class MainModalComponent implements OnInit{
     },
   ];
 
+
+  replaceLabels: IResponsiveTableKeyLabel[] = [
+    { key:'habilities', label: 'Habilidades', position: 4, isComplex: true},
+    { key:'id', label: 'Id', position: 1},
+    { key:'name', label: 'Nombre', position: 2},
+    { key:'age', label: 'Edad', position:3},
+  ];
+  
+
   ngOnInit() {  
     this.addForm = this.formBuilder.group({
       id: this.formfieldList[0].control,
       name: this.formfieldList[1].control,
+    });
+    this.storeService.getUserList().pipe(takeUntil(this.unsubscribe$)).subscribe(listUsers =>{
+      if(listUsers && listUsers.length > 0) {
+        let groupOfUsers: string[] =[];
+        listUsers.forEach(user => {
+          let userElement = `${user.name} habilidades:`;
+          if(user.habilities) {
+            user.habilities.forEach(habi => {
+              userElement = userElement + ` ${habi.label}`
+            });
+          }
+          groupOfUsers.push(userElement);
+        });
+        this.listUsers = groupOfUsers;
+        this.fullList = listUsers;
+      }
     })
   }
 
@@ -59,4 +96,18 @@ export class MainModalComponent implements OnInit{
     this.modalService.setShowModal(false);
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  addUser($event: string) {
+    let oldList = [...this.addedUser];
+    this.addedUser = [];
+    let response = $event.split(' habilidades:')[0];
+    let fullUser = this.fullList.filter(element => element.name === response)[0];
+    let newUser = this.clientService.newUser(fullUser);
+    oldList.push(newUser);
+    this.addedUser = [...oldList];
+  }
 }
