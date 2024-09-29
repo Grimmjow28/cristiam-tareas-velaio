@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { MainInputComponent } from '../main-input/main-input.component';
 import { IFormElement } from 'src/app/interfaces/IInputElement';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-main-modal',
@@ -12,6 +13,8 @@ import { IFormElement } from 'src/app/interfaces/IInputElement';
   styleUrls: ['./main-modal.component.scss']
 })
 export class MainModalComponent {
+
+  constructor(private modalService: ModalService){}
 
   @Input() title: string = 'Crear Nueva Tarea';
 
@@ -34,5 +37,8 @@ export class MainModalComponent {
   ];
 
 
+  CloseModal() {
+    this.modalService.setShowModal(false);
+  }
 
 }

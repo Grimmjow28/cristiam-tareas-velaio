@@ -1,0 +1,40 @@
+.main-modal__main-container {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available; 
+    display: flex;     
+    justify-content: center;
+}
+
+.main-modal__main-body {
+    width: 80%; 
+    height: 90%; 
+    margin: auto; 
+    background: #262051; 
+    border-radius: 1rem; 
+    padding: 1rem;
+}
+
+.main-modal__title {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.main-modal__close {
+    font-size: 4vh;
+}
+
+.main-modal__curtain {
+    position: fixed;
+    top: 0;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available; 
+    display: flex; 
+    background: black; 
+    opacity: 0.5;
+    cursor: pointer;
+}
