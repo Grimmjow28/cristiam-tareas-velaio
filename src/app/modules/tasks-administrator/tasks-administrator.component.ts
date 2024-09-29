@@ -26,11 +26,12 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
   tasksList: Itask[] = [];
   filteredTasksList: Itask[] = [];
   replaceLabels: IResponsiveTableKeyLabel[] = [
-    { key:'userName', label: 'Usuario asignado', position: 4},
+    { key:'user', label: 'Personas asociadas', position: 5},
     { key:'id', label: 'Id', position: 1},
     { key:'title', label: 'Tarea', position: 3},
-    { key:'completed', label: 'Estatus', position:2}
-  ]
+    { key:'completed', label: 'Estatus', position:2},
+    { key:'date', label: 'Fecha', position: 4}
+  ];
 
   slectedFilter: number = 0;
   filters: IFilters[] =  [

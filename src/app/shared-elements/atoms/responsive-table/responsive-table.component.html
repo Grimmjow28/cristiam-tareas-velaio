@@ -8,7 +8,12 @@
     </tr>
     <tr *ngFor="let element of elementsToShowPage">
       <td *ngFor="let key of listKeys"  class="responsive-table__td-th">
-        {{ element[key] }}
+        <ng-container *ngIf="key == 'date'"> 
+          {{ element[key] | date }}
+        </ng-container>
+        <ng-container *ngIf="key != 'date'">
+          {{element[key]}}
+        </ng-container>
       </td>
     </tr>
   </table>
