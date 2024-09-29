@@ -1,20 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { MainInputComponent } from '../main-input/main-input.component';
 import { IFormElement } from 'src/app/interfaces/IInputElement';
 import { ModalService } from '../../services/modal.service';
+import { MainButtonComponent } from "../main-button/main-button.component";
 
 @Component({
   selector: 'app-main-modal',
   standalone: true,
-  imports: [CommonModule, MainInputComponent, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MainInputComponent, FormsModule, ReactiveFormsModule, MainButtonComponent],
   templateUrl: './main-modal.component.html',
   styleUrls: ['./main-modal.component.scss']
 })
-export class MainModalComponent {
+export class MainModalComponent implements OnInit{
 
-  constructor(private modalService: ModalService){}
+  constructor(private modalService: ModalService, private formBuilder: FormBuilder){}
 
   @Input() title: string = 'Crear Nueva Tarea';
 
@@ -34,8 +35,25 @@ export class MainModalComponent {
         ]
       }
     },
+    {
+      control: new FormControl('', [Validators.required]),
+      complement: {
+        label:'Fecha Limite',
+        placeholder: 'dd/mm/yyyy..',
+        type: 'date',
+        errors: [
+          { key: 'required', label: 'Este campo es requerido' }
+        ]
+      }
+    },
   ];
 
+  ngOnInit() {  
+    this.addForm = this.formBuilder.group({
+      id: this.formfieldList[0].control,
+      name: this.formfieldList[1].control,
+    })
+  }
 
   CloseModal() {
     this.modalService.setShowModal(false);

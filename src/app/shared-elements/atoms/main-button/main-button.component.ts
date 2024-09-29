@@ -13,6 +13,7 @@ export class MainButtonComponent {
   @Output() click = new EventEmitter<string>()
   @Input() label: string = 'Submit';
   @Input() activateColor: string = '';
+  @Input() disabled: boolean | undefined = false;
 
   generateEvent() {
     this.click.emit(this.label);

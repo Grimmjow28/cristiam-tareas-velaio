@@ -14,7 +14,7 @@
         <ng-template #elseNotDone>
           <ng-container *ngIf="useButtonsOnTheFields && useButtonsOnTheFields.includes(key); else notButton">
             <app-main-button 
-            [activateColor]="element[key] == true? 'green': 'red'"[label]="element[key] == true? 'Terminada': 'En Proceso'"></app-main-button>
+            [activateColor]="element[key] == true? 'lightgreen': 'lightgoldenrodyellow'"[label]="element[key] == true? 'Completada': 'Pendiente'"></app-main-button>
           </ng-container>
           <ng-template #notButton>
             <ng-container *ngIf="key == 'date'"> 

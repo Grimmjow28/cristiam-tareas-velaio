@@ -9,6 +9,7 @@
                 <app-main-input *ngFor="let element of formfieldList" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
             </div>
         </form>
+        <app-main-button [disabled]="addForm && addForm.invalid" [label]="'Agregar Elemento'"></app-main-button>
     </div>
 </div>
 <div class=" main-modal__curtain"></div>
