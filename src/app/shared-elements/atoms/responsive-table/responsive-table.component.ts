@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IResponsiveTableKeyLabel } from 'src/app/interfaces/responsive.table.interfaces';
+import { MainButtonComponent } from '../main-button/main-button.component';
 
 @Component({
   selector: 'app-responsive-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MainButtonComponent],
   templateUrl: './responsive-table.component.html',
   styleUrls: ['./responsive-table.component.scss']
 })
@@ -16,7 +17,11 @@ export class ResponsiveTableComponent implements OnChanges {
   @Input() elementsForPage: number = 10;
   actualPage: number = 1;
   startElement: number = 0;
-  endElement: number = 10;
+  endElement: number = this.elementsForPage;
+
+  startElementToShow: number = 0;
+  endElementToShow: number = this.elementsForPage;
+
   elementsToShowPage: any[] | undefined;
   listKeys: string[] = [];
 
@@ -25,13 +30,12 @@ export class ResponsiveTableComponent implements OnChanges {
   }
 
   generateListOfKeys() {
-    console.log(this.elementsToShow);
+    this.endElement = this.elementsForPage;
     if(this.elementsToShow && this.elementsToShow.length > 0) {
       let keys = Object.keys(this.elementsToShow[0]);
       this.listKeys = this.sortKeyList(keys);
       this.elementsToShowPage = this.generatePage();
     }
-
   }
 
   sortKeyList(keys: string[]) {
@@ -47,8 +51,18 @@ export class ResponsiveTableComponent implements OnChanges {
   }
 
   generatePage() {
-    let startPage = this.startElement * this.actualPage;
-    let endPage = this.endElement * this.actualPage;
-    return this.elementsToShow!.slice(startPage , endPage);
+    this.startElementToShow = (this.endElement * this.actualPage) - this.elementsForPage;
+    this.endElementToShow = this.endElement * this.actualPage;
+    return this.elementsToShow!.slice(this.startElementToShow , this.endElementToShow);
+  }
+
+  catChButton(event: string) {
+    if(event.includes('Anterior')) {
+      this.actualPage = this.actualPage -1;
+      if(this.actualPage < 1) this.actualPage = 1;
+    } else if(event.includes('Siguiente')) {
+      this.actualPage = this.actualPage +1;
+    }
+    this.elementsToShowPage = this.generatePage();
   }
 }

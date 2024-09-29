@@ -1,12 +1,21 @@
 <table *ngIf="elementsToShowPage && elementsToShowPage.length >0">
     <tr *ngIf="listKeys && listKeys.length > 0">
-      <th *ngFor="let key of listKeys; let i = index">
+      <th *ngFor="let key of listKeys; let i = index" style="color: #fff">
         {{ replaceLabels && replaceLabels[i]? replaceLabels[i].label: key }}
       </th>
     </tr>
     <tr *ngFor="let element of elementsToShowPage">
-      <td *ngFor="let key of listKeys">
+      <td *ngFor="let key of listKeys" style="color: #fff">
         {{ element[key] }}
       </td>
     </tr>
 </table>
+<div style="justify-content: space-between;
+    display: flex; align-content: center; margin-top: 0.5rem;">
+  <app-main-button [label]="'Anterior'" (click)="catChButton($event)"></app-main-button>
+  <div style="display: grid;
+    align-content: center;">
+    <strong style="color: #fff; font-family: Montserrat, sans-serif; line-height: normal; font-size: small;">Pag : {{ actualPage }}, Elementos {{startElementToShow}} a {{ endElementToShow }}</strong>
+  </div>
+  <app-main-button [label]="'Siguiente'" (click)="catChButton($event)"></app-main-button>
+</div>
