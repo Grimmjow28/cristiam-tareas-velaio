@@ -4,7 +4,7 @@
             <h1 class="title">{{ title }}</h1>
             <strong class="text main-modal__close" (click)="CloseModal()">X</strong>
         </div>
-        <form #addFormtp="ngForm">
+        <form #addFormtp="ngForm" class="main-modal__formulario">
             <div>
                 <app-main-input *ngFor="let element of formfieldList" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
             </div>

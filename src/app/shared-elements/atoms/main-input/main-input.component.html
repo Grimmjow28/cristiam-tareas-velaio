@@ -1,23 +1,9 @@
-<div style=" display: flex;     
-flex-direction: column; 
-width: -webkit-fill-available;
-grid-gap: 0.5rem">
-    <label  style="font-family: Montserrat, sans-serif;
-    color: #fff;
-    font-weight: 600;" *ngIf="controlConfiguration.label" for="">{{controlConfiguration.label}}</label>
+<div class="main-input__container">
+    <label  class="main-input__label" *ngIf="controlConfiguration.label" for="">{{controlConfiguration.label}}</label>
     <input 
-    style="outline: none;
-    border-radius: 8px;
-    height: 30px;
-    min-width: 200px;
-    border-color: lightgray;
-    padding: 5px 10px;"
+    class="main-input__input"
     [formControl]="control" [type]="controlConfiguration.type" 
     [ngClass]="{'input-element__input__error': control.touched && this.control.errors }"
     [placeholder]="controlConfiguration.placeholder">
-    <span style="    position: relative; 
-    height: 0;     
-    color: red;
-    font-family: Montserrat, sans-serif;
-    font-size: small;"> {{  content() }}</span>
+    <span class="main-input__error"> {{  content() }}</span>
 </div>

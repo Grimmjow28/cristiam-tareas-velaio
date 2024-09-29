@@ -1,3 +1,33 @@
+.main-input__container {
+    display: flex;     
+    flex-direction: column; 
+    width: -webkit-fill-available;
+    grid-gap: 0.5rem
+}
+
+.main-input__label {
+    font-family: Montserrat, sans-serif;
+    color: #fff;
+    font-weight: 600;
+}
+
+.main-input__input {
+    outline: none;
+    border-radius: 8px;
+    height: 30px;
+    min-width: 200px;
+    border-color: lightgray;
+    padding: 5px 10px;
+}
+
+.main-input__error {
+    position: relative; 
+    height: 0;     
+    color: red;
+    font-family: Montserrat, sans-serif;
+    font-size: small;
+}
+
 .input-element__input__error {
     border-color: red;
 }
