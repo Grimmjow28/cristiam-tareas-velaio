@@ -1,5 +1,7 @@
 <div *ngIf="keys && keys.length && keys.length >0">
-    <p *ngFor="let key of keys">
-        {{ key }}: {{ element[key]}}
+    <p *ngFor="let key of keys" >
+        <ng-container>
+            {{ seeContent(key) }}
+        </ng-container>
     </p>
 </div>

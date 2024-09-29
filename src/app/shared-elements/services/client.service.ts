@@ -47,14 +47,28 @@ export class ClientService {
         });
 
         taskList.forEach(task => {
+          let userList = [];
           let user = users.filter(user => user.id == task.userId)[0];
-          task.user = user; // add the user
+          userList.push(this.newUser(user)); // add the user that comes from the BE
+          let mockedUser = users[Math.floor(Math.random() * users.length-1)];
+          if(mockedUser && mockedUser.id) userList.push(this.newUser(mockedUser));/// add another random user
+          task.user = userList; // add the user
           task.date = new Date(); // mock the date because does not come from the BE
         })
         this._storeService.setTaskList(taskList);
         this._storeService.setUserList(users);
       }
     );
+  }
+
+  newUser(user:any) {
+    let newUser: IUser = {
+      id: user.id,
+      name: user.name,
+      age: user.id + 18, // mocked age
+      habilities: user.habilities    
+    }
+    return newUser;
   }
 
   getUserList() {

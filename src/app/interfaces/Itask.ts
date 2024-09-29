@@ -2,7 +2,7 @@ import { IUser } from "./IUser";
 
 export interface Itask {
     userId: number;
-    user: IUser; //marked as not mandatory because is a field that does not exist on the webapi
+    user: IUser[]; //marked as not mandatory because is a field that does not exist on the webapi
     id: number;
     title: string;
     completed: boolean;
