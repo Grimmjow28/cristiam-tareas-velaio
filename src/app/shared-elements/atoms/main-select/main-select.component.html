@@ -1,0 +1,6 @@
+<div>
+    <label class="text main-select__text" for="select">{{ selectLabel }}:</label>
+    <select name="select" id="select" (change)="selectedElement($event)" >
+      <option *ngFor="let element of listaElementos" [value]="element">{{ element }}</option>
+    </select>
+</div>

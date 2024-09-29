@@ -10,11 +10,12 @@ import { MainButtonComponent } from 'src/app/shared-elements/atoms/main-button/m
 import { MainModalComponent } from 'src/app/shared-elements/atoms/main-modal/main-modal.component';
 import { ModalService } from 'src/app/shared-elements/services/modal.service';
 import { IFilters } from 'src/app/interfaces/IFilters';
+import { MainSelectComponent } from 'src/app/shared-elements/atoms/main-select/main-select.component';
 
 @Component({
   selector: 'app-tasks-administrator',
   standalone: true,
-  imports: [CommonModule, ResponsiveTableComponent, MainButtonComponent, MainModalComponent],
+  imports: [CommonModule, ResponsiveTableComponent, MainButtonComponent, MainModalComponent, MainSelectComponent],
   templateUrl: './tasks-administrator.component.html',
   styleUrls: ['./tasks-administrator.component.scss']
 })
@@ -50,8 +51,11 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
       activateColor: 'darkgrey',
       value: 2,
     }
-  ]
+  ];
+
+  listaElementos: string[] = ['Cartas', 'Tabla'];
   showModal: Observable< boolean> = of(false);
+  showContentAsCard: boolean = true;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
 
@@ -96,6 +100,14 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
       } else {
         this.filteredTasksList = this.tasksList.filter(task => !task.completed);
       }
+    }
+  }
+
+  changeVisualization($event:string) {
+    if($event === 'Tabla') {
+      this.showContentAsCard = false;
+    } else {
+      this.showContentAsCard = true;
     }
   }
 
