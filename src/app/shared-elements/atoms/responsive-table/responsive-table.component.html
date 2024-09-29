@@ -1,13 +1,13 @@
 
 <div class="responsive-table__container">
-  <table *ngIf="elementsToShowPage && elementsToShowPage.length >0" class="responsive-table">
-    <tr *ngIf="listKeys && listKeys.length > 0">
+  <table *ngIf="elementsToShowPage && elementsToShowPage.length >0" class="responsive-table" [ngClass]="{ 'responsive-table__work-as-card': showContentAsCard}">
+    <tr *ngIf="listKeys && listKeys.length > 0 && !showContentAsCard" >
       <th *ngFor="let key of listKeys; let i = index"  class="responsive-table__td-th">
         {{ replaceLabels && replaceLabels[i]? replaceLabels[i].label: key }}
       </th>
     </tr>
     <tr *ngFor="let element of elementsToShowPage">
-      <td *ngFor="let key of listKeys"  class="responsive-table__td-th">
+      <td *ngFor="let key of listKeys; let i = index"  class="responsive-table__td-th">
         <ng-container *ngIf="isComplex.includes(key); else elseNotDone">
           <app-complex-element-table [elements]="element[key]" [doNotShowProperties]="['id']"></app-complex-element-table>
         </ng-container>
@@ -18,13 +18,12 @@
           </ng-container>
           <ng-template #notButton>
             <ng-container *ngIf="key == 'date'"> 
-              {{ element[key] | date }}
+             <strong *ngIf="showContentAsCard">{{ replaceLabels && replaceLabels[i]? replaceLabels[i].label: key }}:  </strong> {{ element[key] | date }}
             </ng-container>
             <ng-container *ngIf="key != 'date'">
-              {{element[key]}}
+              <strong *ngIf="showContentAsCard">{{ replaceLabels && replaceLabels[i]? replaceLabels[i].label: key }}:   </strong> {{element[key]}}
             </ng-container>
           </ng-template>
-
         </ng-template>        
       </td>
     </tr>

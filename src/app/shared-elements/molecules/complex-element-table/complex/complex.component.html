@@ -1,5 +1,5 @@
-<div *ngIf="keys && keys.length && keys.length >0">
-    <p *ngFor="let key of keys" >
+<div *ngIf="keys && keys.length && keys.length >0" class="complex__container">
+    <p *ngFor="let key of keys" class="complex__content" >
         <ng-container *ngIf="!doNotShowProperties || (doNotShowProperties && !doNotShowProperties.includes(key) )">
             {{ seeContent(key) }}
         </ng-container>

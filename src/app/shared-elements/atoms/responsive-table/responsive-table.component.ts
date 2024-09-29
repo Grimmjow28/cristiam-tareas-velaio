@@ -17,6 +17,7 @@ export class ResponsiveTableComponent implements OnChanges {
   @Input() useButtonsOnTheFields: string[] | undefined; 
   @Input() elementsToShow: any[] | undefined;
   @Input() elementsForPage: number = 10;
+  @Input() showContentAsCard: boolean = false;
   actualPage: number = 1;
   startElement: number = 0;
   endElement: number = this.elementsForPage;
