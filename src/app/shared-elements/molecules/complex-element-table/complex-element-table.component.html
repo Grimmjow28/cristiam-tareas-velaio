@@ -1,0 +1,9 @@
+<ng-container *ngIf="isArray; else elseObject">
+    <div *ngFor="let element of elements">
+        <app-complex [element]="element"></app-complex>
+    </div>
+</ng-container>
+<ng-template #elseObject>
+    <app-complex [element]="elements"></app-complex>
+</ng-template>
+

@@ -1,0 +1,5 @@
+<div *ngIf="keys && keys.length && keys.length >0">
+    <p *ngFor="let key of keys">
+        {{ key }}: {{ element[key]}}
+    </p>
+</div>

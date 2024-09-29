@@ -2,11 +2,12 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { IResponsiveTableKeyLabel } from 'src/app/interfaces/responsive.table.interfaces';
 import { MainButtonComponent } from '../main-button/main-button.component';
+import { ComplexElementTableComponent } from '../../molecules/complex-element-table/complex-element-table.component';
 
 @Component({
   selector: 'app-responsive-table',
   standalone: true,
-  imports: [CommonModule, MainButtonComponent],
+  imports: [CommonModule, MainButtonComponent, ComplexElementTableComponent],
   templateUrl: './responsive-table.component.html',
   styleUrls: ['./responsive-table.component.scss']
 })
@@ -24,6 +25,7 @@ export class ResponsiveTableComponent implements OnChanges {
 
   elementsToShowPage: any[] | undefined;
   listKeys: string[] = [];
+  isComplex: string[] = [];
 
   ngOnChanges(): void {
     this.generateListOfKeys();
@@ -43,9 +45,14 @@ export class ResponsiveTableComponent implements OnChanges {
     if(this.replaceLabels && this.replaceLabels.length > 0) {
       this.replaceLabels.sort((a,b) => { return a.position - b.position });
       returnedKey =[];
+      this.isComplex = [];
       this.replaceLabels.forEach(elementKeySorted => {
         returnedKey.push(elementKeySorted.key);
+        if(elementKeySorted.isComplex) {
+          this.isComplex.push(elementKeySorted.key)
+        }
       });
+
     }  
     return returnedKey;
   }
