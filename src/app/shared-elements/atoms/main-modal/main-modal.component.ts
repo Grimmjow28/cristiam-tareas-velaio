@@ -110,4 +110,8 @@ export class MainModalComponent implements OnInit{
     oldList.push(newUser);
     this.addedUser = [...oldList];
   }
+
+  addNewUser() {
+    this.modalService.setShowModalUser(true);
+  }
 }

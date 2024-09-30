@@ -11,11 +11,12 @@ import { MainModalComponent } from 'src/app/shared-elements/atoms/main-modal/mai
 import { ModalService } from 'src/app/shared-elements/services/modal.service';
 import { IFilters } from 'src/app/interfaces/IFilters';
 import { MainSelectComponent } from 'src/app/shared-elements/atoms/main-select/main-select.component';
+import { ModalUserComponent } from 'src/app/shared-elements/atoms/modal-user/modal-user.component';
 
 @Component({
   selector: 'app-tasks-administrator',
   standalone: true,
-  imports: [CommonModule, ResponsiveTableComponent, MainButtonComponent, MainModalComponent, MainSelectComponent],
+  imports: [CommonModule, ResponsiveTableComponent, MainButtonComponent, MainModalComponent, MainSelectComponent,ModalUserComponent],
   templateUrl: './tasks-administrator.component.html',
   styleUrls: ['./tasks-administrator.component.scss']
 })
@@ -55,6 +56,8 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
 
   listaElementos: string[] = ['Cartas', 'Tabla'];
   showModal: Observable< boolean> = of(false);
+  showModalUser: Observable< boolean> = of(false);
+
   showContentAsCard: boolean = true;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -65,6 +68,8 @@ export class TasksAdministratorComponent implements OnInit, OnDestroy {
       this.generateFilteredList();
     });
     this.showModal = this.modalService.getShowModal();
+    this.showModalUser= this.modalService.getShowModalUser();
+
     this.getTasksList();
   }
 

@@ -1,0 +1,30 @@
+<div class="main-modal__main-container">
+    <div class="main-modal__main-body">
+        <div class="main-modal__title">
+            <h1 class="title">Agregar Usuario</h1>
+            <strong class="text main-modal__close" (click)="CloseModal()" >X</strong> 
+        </div>
+        <form #userFormtp="ngForm" class="main-modal__formulario">
+            <div>
+                <app-main-input class="main-modal__input" *ngFor="let element of formfieldList" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
+            </div>
+            <div style="scroll-behavior: auto; overflow-y: auto; height: 250px;">
+                <p class="text" style="margin-top: 0rem;">Agregar Habilidades:</p>
+                <app-main-select [selectLabel]="''" [listaElementos]="listHabilities" (selected)="addHabilitie($event)"></app-main-select>
+                <p class="text">Habilidades Asociadas:</p>
+                <p class="text"  style="text-align: center;" *ngIf="!addedHabilities || addedHabilities.length<1">No tienes Habilidades agregadas</p>
+                <div  *ngIf="addedHabilities && addedHabilities.length>0" style="display: flex; flex-wrap: wrap;">
+                    <p class="text" style="display: block; margin-right: 1rem; margin-top: 0;" *ngFor="let habilitie of addedHabilities"> {{ habilitie}} </p>
+                </div>
+                <form #habilitieFormtp="ngForm" >
+                    <div>
+                        <app-main-input class="main-modal__input" *ngFor="let element of formfieldListHabilities" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
+                        <app-main-button [disabled]="habilitieForm && habilitieForm.invalid" [label]="'Agregar Habilidad'" (click)="agregarHabilidad()"></app-main-button>
+                    </div>
+                </form>
+            </div>
+        </form>
+        <app-main-button [disabled]="userForm && userForm.invalid || !addedHabilities || addedHabilities.length < 1" [label]="'Agregar Usuario'"></app-main-button>
+    </div>
+</div>
+<div class=" main-modal__curtain"></div>

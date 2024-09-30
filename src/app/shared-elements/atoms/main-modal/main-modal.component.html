@@ -14,11 +14,11 @@
                 <p class="text">Personas Asociadas:</p>
                 <p class="text"  style="text-align: center;" *ngIf="!addedUser || addedUser.length<1">No tienes Personas agregadas</p>
                 <app-responsive-table [replaceLabels]="replaceLabels"  *ngIf="addedUser && addedUser.length>0" [elementsToShow]="addedUser"></app-responsive-table>
-                
+                <p class="text">No encuentras el usuario?, aqui lo puedes agregar</p>
+                <app-main-button [label]="'Agregar Usuario'" (click)="addNewUser()" ></app-main-button>                
             </div>
         </form>
         <app-main-button [disabled]="(addForm && addForm.invalid) || addedUser.length <1 || !addUser " [label]="'Agregar Elemento'"></app-main-button>
-
     </div>
 </div>
 <div class=" main-modal__curtain"></div>

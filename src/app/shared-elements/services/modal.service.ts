@@ -8,6 +8,9 @@ export class ModalService {
 
   private showModal$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  private showModalUser$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+
   constructor() { }
 
   setShowModal(shoeModal: boolean) {
@@ -15,5 +18,12 @@ export class ModalService {
   }
   getShowModal(){
     return this.showModal$.asObservable();
+  }
+
+  setShowModalUser(shoeModal: boolean) {
+    this.showModalUser$.next(shoeModal);
+  }
+  getShowModalUser(){
+    return this.showModalUser$.asObservable();
   }
 }
