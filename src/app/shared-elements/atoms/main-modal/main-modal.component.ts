@@ -114,6 +114,7 @@ export class MainModalComponent implements OnInit{
       this.addedUser = [];
       let fullUser = this.fullList.filter(element => element.name === response)[0];
       let newUser = this.clientService.newUser(fullUser);
+      newUser.age = fullUser.age;
       oldList.push(newUser);
       this.addedUser = [...oldList];
     }
