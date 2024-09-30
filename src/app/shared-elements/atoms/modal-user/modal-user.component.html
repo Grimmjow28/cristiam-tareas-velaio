@@ -19,12 +19,12 @@
                 <form #habilitieFormtp="ngForm" >
                     <div>
                         <app-main-input class="main-modal__input" *ngFor="let element of formfieldListHabilities" [control]="element.control" [controlConfiguration]="element.complement"></app-main-input>
-                        <app-main-button [disabled]="habilitieForm && habilitieForm.invalid" [label]="'Agregar Habilidad'" (click)="agregarHabilidad()"></app-main-button>
+                        <app-main-button [disabled]="habilitieForm && habilitieForm.invalid" [label]="'Agregar Habilidad'" (click)="agregarHabilidad($event)"></app-main-button>
                     </div>
                 </form>
             </div>
         </form>
-        <app-main-button [disabled]="userForm && userForm.invalid || !addedHabilities || addedHabilities.length < 1" [label]="'Agregar Usuario'"></app-main-button>
+        <app-main-button [disabled]="userForm && userForm.invalid || !addedHabilities || addedHabilities.length < 1" [label]="'Agregar Usuario'" (click)="createUser($event)"></app-main-button>
     </div>
 </div>
 <div class=" main-modal__curtain"></div>

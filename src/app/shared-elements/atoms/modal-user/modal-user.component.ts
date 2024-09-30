@@ -10,6 +10,7 @@ import { IHabilities } from 'src/app/interfaces/Ihabilities';
 import { Subject, takeUntil } from 'rxjs';
 import { StoreService } from '../../services/store.service';
 import { MainSelectComponent } from '../main-select/main-select.component';
+import { IUser } from 'src/app/interfaces/IUser';
 
 @Component({
   selector: 'app-modal-user',
@@ -24,6 +25,8 @@ export class ModalUserComponent implements OnInit {
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   fullList:IHabilities[] =[];
+  userList:IUser[] =[];
+
   listHabilities: string[] = [];
   addedHabilities: string[] = [];
   
@@ -96,6 +99,9 @@ export class ModalUserComponent implements OnInit {
         this.fullList = listHabilities;
       }
     })
+    this.storeService.getUserList().pipe(takeUntil(this.unsubscribe$)).subscribe(listUsers=> {
+      this.userList = [...listUsers];
+    })
   }
 
   CloseModal() {
@@ -112,14 +118,44 @@ export class ModalUserComponent implements OnInit {
     if(!alreadyExist && $event != '') { this.addedHabilities.push($event);}
   }
 
-  agregarHabilidad() {
-    let alreadyExist = this.addedHabilities.includes(this.habilitieForm?.value.habilitie);
-    if(!alreadyExist) {
-      this.addedHabilities.push(this.habilitieForm?.value.habilitie);
-      this.fullList.push({id: this.fullList.length, label: this.habilitieForm?.value.habilitie});
-      this.storeService.setHabilities(this.fullList);
-      this.habilitieForm?.reset();
+  agregarHabilidad($event: string) {
+    let isString = typeof $event === 'string' ; 
+    if(isString) {
+      let alreadyExist = this.addedHabilities.includes(this.habilitieForm?.value.habilitie);
+      if(!alreadyExist) {
+        this.addedHabilities.push(this.habilitieForm?.value.habilitie);
+        this.fullList.push({id: this.fullList.length, label: this.habilitieForm?.value.habilitie});
+        this.storeService.setHabilities(this.fullList);
+        this.habilitieForm?.reset();
+      }
     }
   }
 
+
+  createUser($event: string) {
+    let isString = typeof $event === 'string';
+    if(isString) {
+      let posibleNew = this.userForm?.value;
+      let name = posibleNew.name;
+      let alreadyExist = this.userList.filter(user => user.name === name);
+      if(alreadyExist && alreadyExist.length > 0) {
+        this.userForm?.get('name')?.setValue('');
+      } else {
+        let habilities:IHabilities[] = [];
+        this.addedHabilities.forEach(habilit =>{
+          let newHabiliti = this.fullList.filter(habilitie => habilitie.label === habilit)[0]
+          habilities.push(newHabiliti);
+        });
+        let iUser: IUser = {
+          name: posibleNew.name,
+          id: this.userList.length,
+          age: posibleNew.age,
+          habilities: habilities
+        }
+        let newUserList = [...this.userList, iUser];
+        this.storeService.setUserList(newUserList);
+        this.CloseModal()
+      }
+    }
+  }
 }

@@ -66,11 +66,14 @@ export class ResponsiveTableComponent implements OnChanges {
   }
 
   catChButton(event: string) {
-    if(event.includes('Anterior')) {
-      this.actualPage = this.actualPage -1;
-      if(this.actualPage < 1) this.actualPage = 1;
-    } else if(event.includes('Siguiente')) {
-      this.actualPage = this.actualPage +1;
+    let isString = typeof event === 'string' ;
+    if(isString) {
+      if(event.includes('Anterior')) {
+        this.actualPage = this.actualPage -1;
+        if(this.actualPage < 1) this.actualPage = 1;
+      } else if(event.includes('Siguiente')) {
+        this.actualPage = this.actualPage +1;
+      }
     }
     this.elementsToShowPage = this.generatePage();
   }
