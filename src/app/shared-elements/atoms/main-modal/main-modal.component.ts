@@ -12,6 +12,7 @@ import { IUser } from 'src/app/interfaces/IUser';
 import { ClientService } from '../../services/client.service';
 import { ResponsiveTableComponent } from '../responsive-table/responsive-table.component';
 import { IResponsiveTableKeyLabel } from 'src/app/interfaces/responsive.table.interfaces';
+import { Itask } from 'src/app/interfaces/Itask';
 
 @Component({
   selector: 'app-main-modal',
@@ -32,6 +33,7 @@ export class MainModalComponent implements OnInit{
   listUsers: string[] = [];
   fullList:IUser[] =[];
   addedUser: IUser[] =[];
+  fulltaskList: Itask[] =[];
 
   formfieldList: IFormElement[] = [
     {
@@ -90,6 +92,9 @@ export class MainModalComponent implements OnInit{
         this.fullList = listUsers;
       }
     })
+    this.storeService.gettaskList().pipe(takeUntil(this.unsubscribe$)).subscribe(listask => {
+      this.fulltaskList = listask;
+    });
   }
 
   CloseModal() {
@@ -102,16 +107,37 @@ export class MainModalComponent implements OnInit{
   }
 
   addUser($event: string) {
-    let oldList = [...this.addedUser];
-    this.addedUser = [];
     let response = $event.split(' habilidades:')[0];
-    let fullUser = this.fullList.filter(element => element.name === response)[0];
-    let newUser = this.clientService.newUser(fullUser);
-    oldList.push(newUser);
-    this.addedUser = [...oldList];
+    let alreadyExist = this.addedUser.filter(user => user.name === response)
+    if(!alreadyExist || alreadyExist.length === 0) {
+      let oldList = [...this.addedUser];
+      this.addedUser = [];
+      let fullUser = this.fullList.filter(element => element.name === response)[0];
+      let newUser = this.clientService.newUser(fullUser);
+      oldList.push(newUser);
+      this.addedUser = [...oldList];
+    }
+
   }
 
   addNewUser() {
     this.modalService.setShowModalUser(true);
+  }
+
+  addTask($event: string) {
+    let isString = typeof $event === 'string';
+    if(isString) {
+      let newTask = this.addForm?.value;
+      let newTaskToAdd: Itask = {
+        id: this.fulltaskList.length,
+        title: newTask.name,
+        user: this.addedUser,
+        userId: 18,
+        completed: false
+      }
+      let newTaskList= [...this.fulltaskList, newTaskToAdd];
+      this.storeService.setTaskList(newTaskList);
+      this.CloseModal();
+    }
   }
 }
